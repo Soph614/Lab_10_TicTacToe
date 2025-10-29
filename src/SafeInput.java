@@ -75,12 +75,12 @@ public class SafeInput {
             }
             else if (pipe.hasNextDouble()) {
                 double doubleTrash = pipe.nextDouble();
-                System.out.println("[" + doubleTrash + "] is not an integer at all.");
+                System.out.println("'" + doubleTrash + "' is not an integer at all.");
                 pipe.nextLine(); // clears the buffer
             }
             else {
                 String trash = pipe.nextLine();
-                System.out.println("[" + trash + "] is not an integer at all.");
+                System.out.println("'" + trash + "' is not an integer at all.");
                 // pipe.nextLine();
             }
 

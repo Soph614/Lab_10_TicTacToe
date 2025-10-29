@@ -21,22 +21,38 @@ public class Lab_10_TicTacToe {
         move = move++
 
          */
-        int move = 0;
+
+        // INITIATING VARIABLES
+        int row;
+        int col;
         boolean done = false;
+        boolean xWon = false;
+        boolean oWon = false;
         Scanner pipe = new Scanner(System.in);
+
+        // LOOP THAT CONTROLS PLAYING AGAIN
         do {
+            int move = 0;
             clearBoard();
             boolean gameFinished = false;
+            // LOOP THAT LOOKS FOR WINS AND TIES AND ENDS GAME ACCORDINGLY
             do {
-                display();
-                SafeInput.getRangedInt(pipe, "Enter what row you want your move in [1-3]",1, 3);
-                int row = pipe.nextInt();
-                row = row - 1;
-                pipe.nextLine();
-                SafeInput.getRangedInt(pipe, "Enter what column you want your move in [1-3]", 1, 3);
-                int col = pipe.nextInt();
-                col = col - 1;
-                pipe.nextLine();
+                boolean valid = true;
+                // LOOP THAT TESTS FOR A VALID MOVE
+                do {
+                    display();
+                    SafeInput.getRangedInt(pipe, "Enter what row you want your move in [1-3]",1, 3);
+                    row = pipe.nextInt();
+                    row = row - 1;
+                    SafeInput.getRangedInt(pipe, "Enter what column you want your move in [1-3]", 1, 3);
+                    col = pipe.nextInt();
+                    col = col - 1;
+                    valid = isValidMove(row, col);
+                    if (!valid) {
+                        System.out.println("That space has already been taken.");
+                        System.out.println(); // making the spacing nice
+                    }
+                }while (!isValidMove(row, col));
                 move = move + 1;
                 if(move == 1 | move == 3 | move == 5 | move == 7 | move == 9)
                 {
@@ -48,10 +64,22 @@ public class Lab_10_TicTacToe {
                     String player = "O";
                 }
                 if(move >= 5) {
-                    gameFinished = isWin("X");
-                    gameFinished = isWin("O");
+                    xWon = isWin("X");
+                    if(xWon) {
+                        System.out.println("X wins!");
+                        display();
+                        gameFinished = true;
+                    }
+                    oWon = isWin("O");
+                    if(oWon) {
+                        System.out.println("O wins!");
+                        display();
+                        gameFinished = true;
+                    }
                 }
                 if(move == 9) {
+                    display();
+                    System.out.println("No more room on the board!");
                     gameFinished = true;
                 }
             }while(!gameFinished);
@@ -116,6 +144,7 @@ public class Lab_10_TicTacToe {
         }
         return false;
     }
+
 
 
 }
