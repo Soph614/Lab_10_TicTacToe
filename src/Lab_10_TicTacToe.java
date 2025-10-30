@@ -79,6 +79,15 @@ public class Lab_10_TicTacToe {
                         gameFinished = true;
                     }
                 }
+                if(move >= 7) {
+                    boolean tie = isTie();
+                    if(tie) {
+                        System.out.println("It's a tie!");
+                        System.out.println();
+                        display();
+                        gameFinished = true;
+                    }
+                }
                 if(move == 9) {
                     display();
                     System.out.println("No more room on the board!");
@@ -185,7 +194,4 @@ public class Lab_10_TicTacToe {
         }
         return false;
     }
-
-
-
 }
