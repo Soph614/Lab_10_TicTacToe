@@ -84,7 +84,8 @@ public class Lab_10_TicTacToe {
                     }
                 }
                 // TEST FOR 9 MOVES (FULL BOARD)
-                if(move == 9) {
+                // Unnecessary because all full boards will be ties.
+                /* if(move == 9) {
                     if(tie) {
                         gameFinished = true;
                     }
@@ -96,6 +97,7 @@ public class Lab_10_TicTacToe {
                         gameFinished = true; // game loop ends
                     }
                 }
+                 */
             }while(!gameFinished);
             done = SafeInput.getYNConfirm(pipe, "Press Y if you're done, N to keep playing");
         }while(!done);
