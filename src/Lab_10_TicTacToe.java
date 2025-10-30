@@ -5,22 +5,6 @@ public class Lab_10_TicTacToe {
     private static final int COLS = 3;
     private static String board [][] = new String[ROWS][COLS];
     public static void main(String[] args) {
-        /*
-        Clear the board and set the player to X (since X always moves first)
-        clearBoard();
-
-        get the coordinates for the move which should be 1 – 3 for the row and col
-
-        convert the player move coordinates to the array indices which are 0 – 2 by subtracting 1
-
-        loop until the converted player coordinates are a valid move which is an empty space on the board
-
-        record the valid move on the board
-        display();
-        increment the move counter
-        move = move++
-
-         */
 
         // INITIATING VARIABLES
         int row;
@@ -41,21 +25,26 @@ public class Lab_10_TicTacToe {
                 // LOOP THAT TESTS FOR A VALID MOVE
                 do {
                     display();
+                    // COLLECTING COORDINATES
+                    // row
                     SafeInput.getRangedInt(pipe, "Enter what row you want your move in [1-3]",1, 3);
                     row = pipe.nextInt();
                     row = row - 1;
                     pipe.nextLine();
+                    // column
                     SafeInput.getRangedInt(pipe, "Enter what column you want your move in [1-3]", 1, 3);
                     col = pipe.nextInt();
                     col = col - 1;
+                    // CHECK FOR VALIDITY:
                     valid = isValidMove(row, col);
-                    pipe.nextLine();
                     if (!valid) {
                         System.out.println("That space has already been taken."); // letting the user know their error
                         System.out.println(); // making the spacing nice
                     }
                 }while (!isValidMove(row, col));
+                // INCREMENT MOVES
                 move = move + 1;
+                // ASSIGN X OR O ACCORDING TO MOVE NUMBER
                 if(move == 1 | move == 3 | move == 5 | move == 7 | move == 9)
                 {
                     board[row][col] = "X";
@@ -65,39 +54,44 @@ public class Lab_10_TicTacToe {
                     board[row][col] = "O";
                     String player = "O";
                 }
+                // TEST FOR WINS
                 if(move >= 5) {
+                    // (testing individually so that the computer can announce the winner)
                     xWon = isWin("X");
                     if(xWon) {
                         System.out.println("X wins!");
                         display();
-                        gameFinished = true;
+                        gameFinished = true; // game loop ends
                     }
                     oWon = isWin("O");
                     if(oWon) {
                         System.out.println("O wins!");
                         display();
-                        gameFinished = true;
+                        gameFinished = true; // game loop ends
                     }
                 }
+                // TEST FOR TIE
                 if(move >= 7) {
                     boolean tie = isTie();
                     if(tie) {
-                        System.out.println("It's a tie!");
-                        System.out.println();
-                        display();
-                        gameFinished = true;
+                        System.out.println("It's a tie!"); // announcing the reason why the game is no longer prompting for input
+                        System.out.println(); // making the spacing nice
+                        display(); // showing the board
+                        gameFinished = true; // game loop ends
                     }
                 }
+                // TEST FOR 9 MOVES (FULL BOARD)
                 if(move == 9) {
                     display();
                     System.out.println("No more room on the board!");
-                    gameFinished = true;
+                    gameFinished = true; // game loop ends
                 }
             }while(!gameFinished);
             done = SafeInput.getYNConfirm(pipe, "Press Y if you're done, N if not (you want to keep playing)");
         }while(!done);
     }
 
+    // METHODS...
     private static void clearBoard() {
 
         for(int row = 0; row < ROWS; row++) {
@@ -155,8 +149,6 @@ public class Lab_10_TicTacToe {
         }
         return false;
     }
-
-
 
     private static boolean isTie() {
         if(isColTie() || isRowTie() || isDiagonalTie()) {
