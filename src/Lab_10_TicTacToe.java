@@ -9,6 +9,7 @@ public class Lab_10_TicTacToe {
         // INITIATING VARIABLES
         int row = 0;
         int col = 0;
+        boolean tie = false;
         boolean done = false;
         boolean xWon = false;
         boolean oWon = false;
@@ -37,7 +38,6 @@ public class Lab_10_TicTacToe {
                     valid = isValidMove(row, col);
                     if (!valid) {
                         System.out.println("That space has already been taken."); // letting the user know their error
-                        System.out.println(); // making the spacing nice
                     }
                 }while (!isValidMove(row, col));
                 // INCREMENT MOVES
@@ -74,7 +74,7 @@ public class Lab_10_TicTacToe {
                 }
                 // TEST FOR TIE
                 if(move >= 7) {
-                    boolean tie = isTie();
+                    tie = isTie();
                     if(tie) {
                         System.out.println("-----------");
                         System.out.println("It's a tie!"); // announcing the reason why the game is no longer prompting for input
@@ -85,14 +85,19 @@ public class Lab_10_TicTacToe {
                 }
                 // TEST FOR 9 MOVES (FULL BOARD)
                 if(move == 9) {
-                    display();
-                    System.out.println("--------------------------");
-                    System.out.println("No more room on the board!");
-                    System.out.println("--------------------------");
-                    gameFinished = true; // game loop ends
+                    if(tie) {
+                        gameFinished = true;
+                    }
+                    else {
+                        display();
+                        System.out.println("--------------------------");
+                        System.out.println("No more room on the board!");
+                        System.out.println("--------------------------");
+                        gameFinished = true; // game loop ends
+                    }
                 }
             }while(!gameFinished);
-            done = SafeInput.getYNConfirm(pipe, "Press Y if you're done, N if not (you want to keep playing)");
+            done = SafeInput.getYNConfirm(pipe, "Press Y if you're done, N to keep playing");
         }while(!done);
     }
 
@@ -107,11 +112,11 @@ public class Lab_10_TicTacToe {
     }
 
     private static void display() {
-        System.out.println("|'''''''|");
-        System.out.println("| " + board[0][0] + "|" + board[0][1] + "|" + board[0][2] + " |");
-        System.out.println("| " + board[1][0] + "|" + board[1][1] + "|" + board[1][2] + " |");
-        System.out.println("| " + board[2][0] + "|" + board[2][1] + "|" + board[2][2] + " |");
-        System.out.println("|_______|");
+        System.out.println("# # # # #");
+        System.out.println("# " + board[0][0] + "|" + board[0][1] + "|" + board[0][2] + " #");
+        System.out.println("# " + board[1][0] + "|" + board[1][1] + "|" + board[1][2] + " #");
+        System.out.println("# " + board[2][0] + "|" + board[2][1] + "|" + board[2][2] + " #");
+        System.out.println("# # # # #");
 
     }
     private static boolean isValidMove(int row, int col) {
@@ -158,7 +163,7 @@ public class Lab_10_TicTacToe {
     }
 
     private static boolean isTie() {
-        if(isColTie() || isRowTie() || isDiagonalTie()) {
+        if(isColTie() && isRowTie() && isDiagonalTie()) {
             return true;
         }
         return false;
@@ -184,13 +189,10 @@ public class Lab_10_TicTacToe {
 
     private static boolean isDiagonalTie() {
         for(int row = 0; row < ROWS; row++) {
-            if(board[0][0].equals("X") | board[1][1].equals("X") | board[2][2].equals("X") && board[0][0].equals("O") | board[1][1].equals("O") | board[2][2].equals("O")) {
-                return true;
+         // IF one diagonal vector eliminated.............................................................................................................................and the other eliminated as well
+            if(board[0][0].equals("X") | board[1][1].equals("X") | board[2][2].equals("X") && board[0][0].equals("O") | board[1][1].equals("O") | board[2][2].equals("O") && board[2][0].equals("X") | board[1][1].equals("X") | board[0][2].equals("X") && board[2][0].equals("O") | board[1][1].equals("O") | board[0][2].equals("O"))
+                         return true;
             }
-            if(board[2][0].equals("X") | board[1][1].equals("X") | board[0][2].equals("X") && board[2][0].equals("O") | board[1][1].equals("O") | board[0][2].equals("O")) {
-                return true;
-            }
-        }
         return false;
     }
 }
