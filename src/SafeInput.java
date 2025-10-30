@@ -61,10 +61,11 @@ public class SafeInput {
     }
     public static int getRangedInt(Scanner pipe, String prompt, int low, int high) {
         boolean done = false;
+        int userInt = 0;
         do {
             System.out.print("\n" + prompt + ": ");
             if (pipe.hasNextInt()) {
-                int userInt = pipe.nextInt();
+                userInt = pipe.nextInt();
                 if(userInt >= low && userInt <= high) {
                     done = true;
                 }
@@ -86,7 +87,7 @@ public class SafeInput {
 
         } while(!done);
 
-        return low;
+        return userInt;
     }
     public static double getRangedDouble(Scanner pipe, String prompt, double low, double high) {
         boolean done = false;

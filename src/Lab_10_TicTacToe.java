@@ -7,8 +7,8 @@ public class Lab_10_TicTacToe {
     public static void main(String[] args) {
 
         // INITIATING VARIABLES
-        int row;
-        int col;
+        int row = 0;
+        int col = 0;
         boolean done = false;
         boolean xWon = false;
         boolean oWon = false;
@@ -27,14 +27,12 @@ public class Lab_10_TicTacToe {
                     display();
                     // COLLECTING COORDINATES
                     // row
-                    SafeInput.getRangedInt(pipe, "Enter what row you want your move in [1-3]",1, 3);
-                    row = pipe.nextInt();
+                    row = SafeInput.getRangedInt(pipe, "Enter what row you want your move in [1-3]",1, 3);;
                     row = row - 1;
-                    pipe.nextLine();
                     // column
-                    SafeInput.getRangedInt(pipe, "Enter what column you want your move in [1-3]", 1, 3);
-                    col = pipe.nextInt();
+                    col = SafeInput.getRangedInt(pipe, "Enter what column you want your move in [1-3]", 1, 3);
                     col = col - 1;
+                    pipe.nextLine();
                     // CHECK FOR VALIDITY:
                     valid = isValidMove(row, col);
                     if (!valid) {
@@ -59,13 +57,17 @@ public class Lab_10_TicTacToe {
                     // (testing individually so that the computer can announce the winner)
                     xWon = isWin("X");
                     if(xWon) {
+                        System.out.println("-------");
                         System.out.println("X wins!");
+                        System.out.println("-------");
                         display();
                         gameFinished = true; // game loop ends
                     }
                     oWon = isWin("O");
                     if(oWon) {
+                        System.out.println("-------");
                         System.out.println("O wins!");
+                        System.out.println("-------");
                         display();
                         gameFinished = true; // game loop ends
                     }
@@ -74,8 +76,9 @@ public class Lab_10_TicTacToe {
                 if(move >= 7) {
                     boolean tie = isTie();
                     if(tie) {
+                        System.out.println("-----------");
                         System.out.println("It's a tie!"); // announcing the reason why the game is no longer prompting for input
-                        System.out.println(); // making the spacing nice
+                        System.out.println("-----------");
                         display(); // showing the board
                         gameFinished = true; // game loop ends
                     }
@@ -83,7 +86,9 @@ public class Lab_10_TicTacToe {
                 // TEST FOR 9 MOVES (FULL BOARD)
                 if(move == 9) {
                     display();
+                    System.out.println("--------------------------");
                     System.out.println("No more room on the board!");
+                    System.out.println("--------------------------");
                     gameFinished = true; // game loop ends
                 }
             }while(!gameFinished);
@@ -102,9 +107,11 @@ public class Lab_10_TicTacToe {
     }
 
     private static void display() {
-        System.out.println(board[0][0] + "|" + board[0][1] + "|" + board[0][2]);
-        System.out.println(board[1][0] + "|" + board[1][1] + "|" + board[1][2]);
-        System.out.println(board[2][0] + "|" + board[2][1] + "|" + board[2][2]);
+        System.out.println("|'''''''|");
+        System.out.println("| " + board[0][0] + "|" + board[0][1] + "|" + board[0][2] + " |");
+        System.out.println("| " + board[1][0] + "|" + board[1][1] + "|" + board[1][2] + " |");
+        System.out.println("| " + board[2][0] + "|" + board[2][1] + "|" + board[2][2] + " |");
+        System.out.println("|_______|");
 
     }
     private static boolean isValidMove(int row, int col) {
