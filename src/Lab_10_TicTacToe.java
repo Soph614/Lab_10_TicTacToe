@@ -44,12 +44,14 @@ public class Lab_10_TicTacToe {
                     SafeInput.getRangedInt(pipe, "Enter what row you want your move in [1-3]",1, 3);
                     row = pipe.nextInt();
                     row = row - 1;
+                    pipe.nextLine();
                     SafeInput.getRangedInt(pipe, "Enter what column you want your move in [1-3]", 1, 3);
                     col = pipe.nextInt();
                     col = col - 1;
                     valid = isValidMove(row, col);
+                    pipe.nextLine();
                     if (!valid) {
-                        System.out.println("That space has already been taken.");
+                        System.out.println("That space has already been taken."); // letting the user know their error
                         System.out.println(); // making the spacing nice
                     }
                 }while (!isValidMove(row, col));
@@ -139,6 +141,45 @@ public class Lab_10_TicTacToe {
                 return true;
             }
             if(board[2][0].equals(player) && board[1][1].equals(player) && board[0][2].equals(player)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
+    private static boolean isTie() {
+        if(isColTie() || isRowTie() || isDiagonalTie()) {
+            return true;
+        }
+        return false;
+    }
+
+    private static boolean isRowTie() {
+        for(int row = 0; row < ROWS; row++) {
+            if(board[row][0].equals("X") | board[row][1].equals("X") | board[row][2].equals("X") && board[row][0].equals("O") | board[row][1].equals("O") | board[row][2].equals("O")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean isColTie() {
+        for(int col = 0; col < ROWS; col++) {
+            if(board[0][col].equals("X") | board[1][col].equals("X") && board[2][col].equals("X") && board[0][col].equals("O") | board[1][col].equals("O") | board[2][col].equals("O")) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean isDiagonalTie() {
+        for(int row = 0; row < ROWS; row++) {
+            if(board[0][0].equals("X") | board[1][1].equals("X") | board[2][2].equals("X") && board[0][0].equals("O") | board[1][1].equals("O") | board[2][2].equals("O")) {
+                return true;
+            }
+            if(board[2][0].equals("X") | board[1][1].equals("X") | board[0][2].equals("X") && board[2][0].equals("O") | board[1][1].equals("O") | board[0][2].equals("O")) {
                 return true;
             }
         }
